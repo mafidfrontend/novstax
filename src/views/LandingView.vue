@@ -26,6 +26,16 @@ const crestPills = computed(() =>
 const name = ref("");
 const message = ref("");
 const isContactDisabled = computed(() => !name.value.trim() || !message.value.trim());
+const rankOrder = ["prime", "ultra", "hero", "comet", "nitro", "gold", "donator", "legend", "vipplus", "vip"];
+const rankVariants = ["life", "d30"];
+const rankBoards = computed(() =>
+  rankVariants.map((variant) => ({
+    variant,
+    items: rankOrder
+      .map((id) => ranks.find((r) => r.id === id && r.variant === variant))
+      .filter(Boolean),
+  })),
+);
 
 useReveal(".landing-root");
 
@@ -127,20 +137,24 @@ function sendContact() {
         <h2 class="section-title">{{ t("ranksPage.title") }}</h2>
         <p class="section-lead">{{ t("ranksPage.lead") }}</p>
       </header>
-      <div class="rank-grid">
-        <GlowCard v-for="(r, idx) in ranks" :key="`${r.id}-${r.variant}-${idx}`" v-memo="[r.id, r.variant, locale]" :elevated="r.id === 'prime' && r.variant === 'life'">
-          <div class="rank-top">
-            <div class="rank-title-row">
-              <span class="rank-emoji">{{ r.emoji }}</span>
-              <h3 class="rank-name">{{ t(`ranks.${r.id}.name`) }}</h3>
+      <div class="rank-board-grid">
+        <GlowCard v-for="board in rankBoards" :key="board.variant" v-memo="[board.variant, locale]" :elevated="board.variant === 'life'">
+          <div class="rank-board">
+            <div class="rank-board__head">
+              <h3 class="rank-board__title">RANK NARXLARI</h3>
+              <p class="rank-board__sub">{{ t(`variant.${board.variant}`) }}</p>
             </div>
-            <span class="pill" :class="{ 'pill-hot': r.variant === 'life' }">{{ t(`variant.${r.variant}`) }}</span>
+            <ul class="rank-board__rows">
+              <li v-for="item in board.items" :key="`${item.id}-${item.variant}`" class="rank-board__row">
+                <span class="rank-board__name" :class="`rank-board__name--${item.id}`">
+                  {{ t(`ranks.${item.id}.name`) }}
+                </span>
+                <span class="rank-board__dots" aria-hidden="true" />
+                <span class="rank-board__price">{{ formatMoney(item.price) }}</span>
+                <a class="rank-board__tag" :href="rankHref(item)" target="_blank" rel="noopener noreferrer">[{{ board.variant === "life" ? "∞" : "30d" }}]</a>
+              </li>
+            </ul>
           </div>
-          <div class="rank-price">{{ formatMoney(r.price) }}</div>
-          <ul class="rank-list">
-            <li v-for="i in 4" :key="i">{{ t(`ranks.${r.id}.features.${i - 1}`) }}</li>
-          </ul>
-          <a class="buy-link" :href="rankHref(r)" target="_blank" rel="noopener noreferrer">{{ t("buy") }}</a>
         </GlowCard>
       </div>
     </section>

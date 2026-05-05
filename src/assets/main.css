@@ -796,6 +796,95 @@ html[data-theme="light"] .hero-title {
   gap: 18px;
 }
 
+.rank-board-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 18px;
+}
+
+.rank-board__head {
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.rank-board__title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  color: #86efac;
+  text-transform: uppercase;
+}
+
+.rank-board__sub {
+  margin: 6px 0 0;
+  font-size: 14px;
+  color: #f8fafc;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.rank-board__rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+
+.rank-board__row {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 8px;
+  font-size: 20px;
+  line-height: 1.1;
+}
+
+.rank-board__name {
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-shadow: 0 0 14px rgba(255, 255, 255, 0.22);
+}
+
+.rank-board__name--prime { color: #f43f5e; }
+.rank-board__name--ultra { color: #facc15; }
+.rank-board__name--hero { color: #ef4444; }
+.rank-board__name--comet { color: #8b5cf6; }
+.rank-board__name--nitro { color: #3b82f6; }
+.rank-board__name--gold { color: #fbbf24; }
+.rank-board__name--donator { color: #f1f5f9; }
+.rank-board__name--legend { color: #38bdf8; }
+.rank-board__name--vipplus { color: #fb923c; }
+.rank-board__name--vip { color: #4ade80; }
+
+.rank-board__dots {
+  border-bottom: 2px dotted color-mix(in oklab, var(--text) 48%, transparent);
+  transform: translateY(2px);
+  opacity: 0.8;
+}
+
+.rank-board__price {
+  font-weight: 800;
+  color: #f8fafc;
+  white-space: nowrap;
+}
+
+.rank-board__tag {
+  font-family: var(--mono);
+  font-weight: 800;
+  color: #e879f9;
+  font-size: 17px;
+  text-shadow: 0 0 12px rgba(232, 121, 249, 0.45);
+}
+
+@media (max-width: 480px) {
+  .rank-board__row {
+    font-size: 17px;
+  }
+}
+
 .rank-top {
   display: flex;
   align-items: flex-start;
